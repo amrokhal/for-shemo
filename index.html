@@ -2,28 +2,27 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>اضغط هنا</title>
 
   <style>
     body {
       margin: 0;
-      height: 100vh;
+      background: #111;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #111;
-      font-family: Arial, sans-serif;
+      height: 100vh;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     button {
       padding: 20px 40px;
-      font-size: 24px;
+      font-size: 28px;
       border: none;
       border-radius: 15px;
       cursor: pointer;
-      background: white;
       transition: 0.3s;
     }
 
@@ -31,19 +30,17 @@
       transform: scale(1.05);
     }
 
-    #emoji {
+    #wall {
       display: none;
-      font-size: 120px;
-      animation: pop 0.4s ease;
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(0);
-      }
-      100% {
-        transform: scale(1);
-      }
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      word-break: break-word;
+      font-size: 45px;
+      line-height: 1.2;
+      padding: 10px;
+      box-sizing: border-box;
+      user-select: none;
     }
   </style>
 </head>
@@ -52,15 +49,23 @@
 
   <button id="btn">اضغط هنا</button>
 
-  <div id="emoji">🖕🏽</div>
+  <div id="wall"></div>
 
   <script>
     const btn = document.getElementById("btn");
-    const emoji = document.getElementById("emoji");
+    const wall = document.getElementById("wall");
 
     btn.onclick = () => {
       btn.style.display = "none";
-      emoji.style.display = "block";
+      wall.style.display = "block";
+
+      let emojis = "";
+
+      for (let i = 0; i < 2000; i++) {
+        emojis += "🖕🏽 ";
+      }
+
+      wall.innerHTML = emojis;
     };
   </script>
 
