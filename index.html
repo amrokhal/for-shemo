@@ -3,126 +3,208 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown To Winter</title>
+  <title>العد التنازلي للشتاء</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    body{
-      font-family:'Cairo',sans-serif;
-      min-height:100vh;
-      overflow:hidden;
-      color:white;
-      background:
-      linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.7)),
-      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1920&auto=format&fit=crop');
-      background-size:cover;
-      background-position:center;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding:20px;
+    body {
+      font-family: 'Cairo', sans-serif;
+      min-height: 100vh;
+      background: 
+        linear-gradient(to bottom, rgba(15, 32, 39, 0.5), rgba(44, 62, 80, 0.8)),
+        url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    .overlay{
-      position:absolute;
-      inset:0;
-      backdrop-filter:blur(2px);
+    .overlay {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(3px);
+      z-index: 1;
     }
 
-    .container{
-      position:relative;
-      z-index:2;
-      width:100%;
-      max-width:900px;
+    .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 800px;
+      padding: 10px;
     }
 
-    h1{
-      font-size:3rem;
-      margin-bottom:10px;
-      text-shadow:0 0 20px rgba(0,0,0,.5);
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      font-weight: 700;
     }
 
-    .subtitle{
-      font-size:1.2rem;
-      opacity:.85;
-      margin-bottom:40px;
+    /* تنسيق التاريخ اللفظي */
+    .target-date {
+      font-size: 1.1rem;
+      font-weight: 300;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 20px;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .countdown{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:20px;
-      margin-bottom:40px;
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 35px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
     }
 
-    .box{
-      background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.15);
-      border-radius:20px;
-      padding:25px 10px;
-      backdrop-filter:blur(10px);
-      box-shadow:0 10px 30px rgba(0,0,0,.2);
-      transition:.3s;
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 35px;
     }
 
-    .box:hover{
-      transform:translateY(-5px);
-      background:rgba(255,255,255,.12);
+    .box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 20px 10px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
-    .number{
-      font-size:3rem;
-      font-weight:700;
+    .box:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
     }
 
-    .label{
-      margin-top:10px;
-      font-size:1rem;
-      opacity:.8;
+    .number {
+      font-size: 3rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
     }
 
-    .poetry{
-      margin-top:20px;
-      line-height:2;
-      font-size:1.2rem;
-      background:rgba(0,0,0,.25);
-      padding:25px;
-      border-radius:20px;
-      backdrop-filter:blur(6px);
+    .label {
+      margin-top: 5px;
+      font-size: 0.95rem;
+      opacity: 0.85;
     }
 
-    .footer{
-      margin-top:25px;
-      opacity:.7;
-      font-size:.9rem;
+    .poetry {
+      line-height: 1.8;
+      font-size: 1.15rem;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 20px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      margin-bottom: 25px;
     }
 
-    @media(max-width:700px){
+    /* تنسيق زر المشاركة */
+    .share-btn {
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-      h1{
-        font-size:2rem;
+    .share-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+      background: linear-gradient(135deg, #34495e, #2980b9);
+    }
+
+    .share-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* رسالة التنبيه عند النسخ */
+    .toast {
+      position: fixed;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(44, 62, 80, 0.95);
+      color: white;
+      padding: 10px 25px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 10;
+      transition: bottom 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .toast.show {
+      bottom: 30px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      opacity: 0.6;
+      font-size: 0.85rem;
+    }
+
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      font-size: 1em;
+      user-select: none;
+      z-index: 1;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) translateX(20px);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        align-items: flex-start;
+        padding-top: 30px;
       }
 
-      .countdown{
-        grid-template-columns:repeat(2,1fr);
-      }
-
-      .number{
-        font-size:2.2rem;
-      }
-
-      .poetry{
-        font-size:1rem;
-      }
+      h1 { font-size: 1.8rem; }
+      .target-date { font-size: 0.9rem; }
+      .subtitle { font-size: 1rem; margin-bottom: 25px; }
+      .countdown { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .box { padding: 15px 5px; }
+      .number { font-size: 2.2rem; }
+      .poetry { font-size: 1rem; padding: 15px; }
+      .share-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -133,49 +215,43 @@
 
   <div class="container">
 
-    <h1>217 يوماً على بداية فصل الشتاء</h1>
+    <h1 id="main-title">جاري الحساب...</h1>
+    
+    <!-- هنا يظهر التاريخ اللفظي تلقائياً عبر الجافاسكريبت -->
+    <div class="target-date" id="verbal-date"></div>
 
     <p class="subtitle">
       ننتظر الشتاء كأن الطمأنينة تسكن فيه
     </p>
 
     <div class="countdown">
-
       <div class="box">
         <div class="number" id="days">0</div>
         <div class="label">يوم</div>
       </div>
-
       <div class="box">
         <div class="number" id="hours">0</div>
         <div class="label">ساعة</div>
       </div>
-
       <div class="box">
         <div class="number" id="minutes">0</div>
         <div class="label">دقيقة</div>
       </div>
-
       <div class="box">
         <div class="number" id="seconds">0</div>
         <div class="label">ثانية</div>
       </div>
-
     </div>
 
     <div class="poetry">
-      <p>
-        "يأتي الشتاء محملاً بالحنين،
-        كأن المطر يعرف كل الأشياء التي أخفيناها."
-      </p>
-
-      <br>
-
-      <p>
-        "وفي البرد،
-        تصبح القهوة وطنًا صغيرًا."
-      </p>
+      <p>"يأتي الشتاء محملاً بالحنين، كأن المطر يعرف كل الأشياء التي أخفيناها."</p>
+      <p>"وفي البرد، تصبح القهوة وطنًا صغيرًا."</p>
     </div>
+
+    <!-- زر المشاركة الذكي -->
+    <button class="share-btn" onclick="shareWebsite()">
+      <span>مشاركة هذا الشوق ✨</span>
+    </button>
 
     <div class="footer">
       Made with cold feelings ☁️
@@ -183,45 +259,85 @@
 
   </div>
 
-  <script>
+  <!-- عنصر التنبيه المخفي -->
+  <div class="toast" id="toast-msg">تم نسخ رابط الموقع بنجاح! ❄️</div>
 
-    // بداية الشتاء
-    const winterDate = new Date("December 1, 2026 00:00:00").getTime();
+  <script>
+    // موعد الشتاء الفلكي
+    const targetDateObject = new Date("December 21, 2026 00:00:00");
+    const winterDate = targetDateObject.getTime();
+
+    // كتابة التاريخ لفظياً باللغة العربية
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("verbal-date").innerHTML = `الموعد المتوقع: ${targetDateObject.toLocaleDateString('ar-EG', options)}`;
 
     const updateCountdown = () => {
-
       const now = new Date().getTime();
-
       const distance = winterDate - now;
 
+      if (distance < 0) {
+        document.getElementById("main-title").innerHTML = "أهلاً بك! لقد حلّ فصل الشتاء ❄️";
+        document.querySelector(".countdown").style.display = "none";
+        document.getElementById("verbal-date").style.display = "none";
+        return;
+      }
+
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60)
-      );
-
-      const minutes = Math.floor(
-        (distance % (1000 * 60 * 60))
-        / (1000 * 60)
-      );
-
-      const seconds = Math.floor(
-        (distance % (1000 * 60))
-        / 1000
-      );
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       document.getElementById("days").innerHTML = days;
       document.getElementById("hours").innerHTML = hours;
       document.getElementById("minutes").innerHTML = minutes;
       document.getElementById("seconds").innerHTML = seconds;
+
+      document.getElementById("main-title").innerHTML = `${days} يوماً على بداية فصل الشتاء`;
     }
 
     updateCountdown();
+    setInterval(updateCountdown, 1000);
 
-    setInterval(updateCountdown,1000);
+    // دالة مشاركة الموقع
+    function shareWebsite() {
+      if (navigator.share) {
+        // إذا كان المتصفح يدعم المشاركة الأصلية (مثل الهواتف)
+        navigator.share({
+          title: 'العد التنازلي للشتاء',
+          text: 'شاركوني انتظار الشتاء الطمأنينة والدفء! ❄️☕',
+          url: window.location.href
+        }).catch(err => console.log(err));
+      } else {
+        // إذا كان على كمبيوتر لا يدعمها، يتم نسخ الرابط تلقائياً
+        navigator.clipboard.writeText(window.location.href);
+        const toast = document.getElementById("toast-msg");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    }
 
+    // تأثير الثلج
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      const snowShapes = ['❄', '❅', '❆', '•'];
+      snowflake.innerText = snowShapes[Math.floor(Math.random() * snowShapes.length)];
+      
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = Math.random() * 3 + 4 + 's';
+      snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 7000);
+    }
+    setInterval(createSnowflake, 300);
   </script>
 
 </body>
-  </html>
+</html>
